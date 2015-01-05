@@ -14,6 +14,8 @@ import ConfigParser
 from config.getConfigSection import getConfigSection
 from _ast import Num
 from email import email
+from db.DBProcessing import insert_email
+from db import DBProcessing
 
 def process_mails(client):
     rv, data = client.search(None,'ALL')
@@ -26,8 +28,10 @@ def process_mails(client):
             print "Error in getting message number : ", num
         else :
             msg = email.message_from_string(data[0][1])
-            print msg['subject'], "date: ", msg['Date'], msg['From']
             
+            #print msg['subject'], "date: ", msg['Date'], msg['From']
+            print msg
+            DBProcessing.insert_email(data)
 
 
 
